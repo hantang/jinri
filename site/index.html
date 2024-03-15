@@ -9,6 +9,8 @@
   <link rel="icon" href="icon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lxgw-wenkai-webfont@1.7.0/style.css" />
   <script src="https://sdk.jinrishici.com/v2/browser/jinrishici.js" charset="utf-8"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lunar-javascript/1.6.8/lunar.min.js"></script>
+
   <style>
     :root {
       --primary-color: #3f51b5;
@@ -117,6 +119,7 @@
   </div>
 
   <div class="poem-container">
+    <p id="dateInfo"></p>
     <span id="jinrishici-sentence">正在加载今日诗词....</span>
   </div>
   <div class="calendar-container">
@@ -125,12 +128,25 @@
 
   <footer>
     &copy; 2024 hantang<br>
-    日历-<a href="https://owspace.com">单向空间</a>；
-    诗句-<a href="https://www.wxhi.cn">今日诗词</a>;
-    字体-霞鹜文楷
+    日历-<a href="https://owspace.com">单向空间</a> |
+    诗句-<a href="https://www.wxhi.cn">今日诗词</a> |
+    日历-<a href="https://github.com/6tail/lunar-javascript">Lunar</a> |
+    字体-<a href="https://github.com/lxgw/LxgwWenKai">霞鹜文楷</a>
   </footer>
 
   <script>
+    function updateLunarDate(date) {
+      const currentDate = new Date(datePicker.value);
+      const lunarDate = Lunar.fromDate(currentDate);
+      const day = lunarDate.toString();
+      const week = lunarDate.getWeekInChinese();
+      const gz = lunarDate.getYearInGanZhi();
+      const sx = lunarDate.getYearShengXiao()
+      const fest = lunarDate.getFestivals();
+      const jieqi = lunarDate.getJie();
+      document.getElementById("dateInfo").innerText = `${day} ${week} ${gz}${sx}年 ${jieqi} ${fest}`.trim();
+    }
+
     function updateImageSrc(date) {
       const [year, month, day] = date.split('-');
       const base = 'https://img.owspace.com/Public/uploads/Download';
@@ -146,12 +162,14 @@
     datePicker.value = new Date().toISOString().split("T")[0];
     document.getElementById('today').innerText = datePicker.value;
     updateImageSrc(datePicker.value);
+    updateLunarDate(datePicker.value);
     nextDayButton.addEventListener('click', function () {
       const currentDate = new Date(datePicker.value);
       currentDate.setDate(currentDate.getDate() + 1);
       datePicker.value = currentDate.toISOString().split("T")[0];
       document.getElementById('today').innerText = datePicker.value;
       updateImageSrc(datePicker.value);
+      updateLunarDate(datePicker.value);
     });
     prevDayButton.addEventListener('click', function () {
       const currentDate = new Date(datePicker.value);
@@ -159,11 +177,13 @@
       datePicker.value = currentDate.toISOString().split("T")[0];
       document.getElementById('today').innerText = datePicker.value;
       updateImageSrc(datePicker.value);
+      updateLunarDate(datePicker.value);
     });
 
     datePicker.addEventListener('change', function () {
       document.getElementById('today').innerText = this.value;
       updateImageSrc(this.value);
+      updateLunarDate(datePicker.value);
     });
   </script>
 </body>
