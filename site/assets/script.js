@@ -13,15 +13,19 @@ function updateLunarDate(date) {
 function updatePage(date) {
   updateLunarDate(date);
   const randomNumber = Math.random();
+  let result = false;
   // console.log(randomNumber, new Date() < new Date(date));
-  if (randomNumber >= 0.5 || new Date() < new Date(date)) {
-    document.getElementById('calendar-owspace').style.display = '';
-    document.getElementById('calendar-one').style.display = 'none';
-    updateOwspaceImage(date)
-  } else {
+  if (randomNumber < 0.1 && new Date() > new Date(date)) {
+    // http vs https
+      result = updateOneImage(date);
+  }
+  if (result) {
     document.getElementById('calendar-owspace').style.display = 'none';
     document.getElementById('calendar-one').style.display = '';
-    updateOneImage(date)
+  } else {
+    document.getElementById('calendar-owspace').style.display = '';
+    document.getElementById('calendar-one').style.display = 'none';
+    updateOwspaceImage(date);
   }
 }
 
@@ -42,7 +46,9 @@ function updateOneImage(date) {
     })
     .catch(error => {
       console.error('请求出错：', error);
+      return false;
     });
+  return true;
 }
 
 function displayOneData(data) {
