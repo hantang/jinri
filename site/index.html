@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="referrer" content="same-origin">
+  <title>单向日历</title>
+  <link rel="icon" href="icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lxgw-wenkai-webfont@1.7.0/style.css" />
+  <script src="https://sdk.jinrishici.com/v2/browser/jinrishici.js" charset="utf-8"></script>
+  <style>
+    :root {
+      --primary-color: #3f51b5;
+      --accent-color: #536dfe;
+      --background-color: #ffffff;
+      --text-color: #000000;
+      --footer-bg-color: #121212;
+      --footer-color: #ffffff;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --background-color: #1D2129;
+        --text-color: #ffffff;
+      }
+
+      img {
+        filter: invert(100%);
+      }
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      color: var(--text-color);
+      background-color: var(--background-color);
+      text-align: center;
+      font-family: "LXGW WenKai", 'STKaiti', sans-serif;
+    }
+
+    .navigation {
+      background-color: var(--primary-color);
+      color: var(--footer-color);
+      padding: 10px;
+      text-align: center;
+    }
+
+    .calendar-container {
+      margin: 20px auto;
+      text-align: center;
+    }
+
+    .poem-container span {
+      margin: 10px auto;
+      font-size: xx-large;
+    }
+
+    img.calendar {
+      width: 80%;
+      max-width: 600px;
+      height: auto;
+    }
+
+    .btn {
+      background-color: var(--accent-color);
+      color: #fff;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin: 0 10px;
+    }
+
+    .btn:hover {
+      background-color: var(--primary-color);
+    }
+
+    input[type="date"] {
+      appearance: none;
+      background-color: transparent;
+      color: var(--footer-color);
+      border: none;
+      border-bottom: 1px solid var(--accent-color);
+      outline: none;
+      font-size: 16px;
+      padding: 5px 0;
+      margin: 5px;
+    }
+
+    footer {
+      background-color: var(--footer-bg-color);
+      color: var(--footer-color);
+      padding: 20px 0;
+      width: 100%;
+      font-size: small;
+    }
+
+    a {
+      color: var(--primary-color);
+    }
+
+    a:hover {
+      color: var(--accent-color);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="navigation">
+    <button class="btn" id="prevDay">上一天</button>
+    <label id="today">今天</label>
+    <button class="btn" id="nextDay">下一天</button>
+    <label for="datePicker">选择日期：</label>
+    <input type="date" id="datePicker">
+  </div>
+
+  <div class="poem-container">
+    <span id="jinrishici-sentence">正在加载今日诗词....</span>
+  </div>
+  <div class="calendar-container">
+    <img class="calendar" src="" alt="日历图片">
+  </div>
+
+  <footer>
+    &copy; 2024 hantang<br>
+    日历-<a href="https://owspace.com">单向空间</a>；
+    诗句-<a href="https://www.wxhi.cn">今日诗词</a>;
+    字体-霞鹜文楷
+  </footer>
+
+  <script>
+    function updateImageSrc(date) {
+      const [year, month, day] = date.split('-');
+      const base = 'https://img.owspace.com/Public/uploads/Download';
+      calendarImage.src = `${base}/${year}/${month}${day}.jpg`;
+      console.log(calendarImage.src)
+    }
+
+    const datePicker = document.getElementById('datePicker');
+    const prevDayButton = document.getElementById('prevDay');
+    const nextDayButton = document.getElementById('nextDay');
+    const calendarImage = document.querySelector('.calendar');
+
+    datePicker.value = new Date().toISOString().split("T")[0];
+    document.getElementById('today').innerText = datePicker.value;
+    updateImageSrc(datePicker.value);
+    nextDayButton.addEventListener('click', function () {
+      const currentDate = new Date(datePicker.value);
+      currentDate.setDate(currentDate.getDate() + 1);
+      datePicker.value = currentDate.toISOString().split("T")[0];
+      document.getElementById('today').innerText = datePicker.value;
+      updateImageSrc(datePicker.value);
+    });
+    prevDayButton.addEventListener('click', function () {
+      const currentDate = new Date(datePicker.value);
+      currentDate.setDate(currentDate.getDate() - 1);
+      datePicker.value = currentDate.toISOString().split("T")[0];
+      document.getElementById('today').innerText = datePicker.value;
+      updateImageSrc(datePicker.value);
+    });
+
+    datePicker.addEventListener('change', function () {
+      document.getElementById('today').innerText = this.value;
+      updateImageSrc(this.value);
+    });
+  </script>
+</body>
+
+</html>
