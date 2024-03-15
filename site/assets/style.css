@@ -1,0 +1,158 @@
+:root {
+    --primary-color: #3f51b5;
+    --accent-color: #536dfe;
+    --background-color: #ffffff;
+    --text-color: #000000;
+    --footer-bg-color: #121212;
+    --footer-color: #ffffff;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --background-color: #1D2129;
+        --text-color: #ffffff;
+    }
+
+    img {
+        filter: invert(100%);
+    }
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    color: var(--text-color);
+    background-color: var(--background-color);
+    text-align: center;
+    font-family: "LXGW WenKai", 'STKaiti', sans-serif;
+}
+
+.navigation {
+    background-color: var(--primary-color);
+    color: var(--footer-color);
+    padding: 10px;
+    text-align: center;
+}
+
+.calendar-container {
+    margin: 20px auto;
+    text-align: center;
+}
+
+.poem-container span {
+    margin: 10px auto;
+    font-size: xx-large;
+}
+
+img.calendar {
+    width: 80%;
+    max-width: 600px;
+    height: auto;
+}
+
+.btn {
+    background-color: var(--accent-color);
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 0 10px;
+}
+
+.btn:hover {
+    background-color: var(--primary-color);
+}
+
+input[type="date"] {
+    appearance: none;
+    background-color: transparent;
+    color: var(--footer-color);
+    border: none;
+    border-bottom: 1px solid var(--accent-color);
+    outline: none;
+    font-size: 16px;
+    padding: 5px 0;
+    margin: 5px;
+}
+
+footer {
+    background-color: var(--footer-bg-color);
+    color: var(--footer-color);
+    padding: 20px 0;
+    width: 100%;
+    font-size: small;
+}
+
+a {
+    color: var(--primary-color);
+}
+
+a:hover {
+    color: var(--accent-color);
+}
+
+.fp-one {
+    width: 600px;
+    border: 15px solid #000;
+    margin: 20px auto;
+    box-sizing: border-box;
+    display: block;
+    overflow: hidden;
+    text-align: center;
+}
+
+.fp-one .fp-one-imagen {
+    width: 100%;
+    vertical-align: middle;
+    overflow-clip-margin: content-box;
+    overflow: clip;
+}
+
+.fp-one .fp-one-imagen-footer {
+    background-color: #333;
+    color: #fff;
+    padding: 3px 0;
+
+}
+
+.fp-one-titulo-pubdate {
+    background-color: #f2f2f2;
+    color: #333;
+    float: right;
+    height: 120px;
+    padding: 12.5px;
+    width: 100px;
+
+}
+
+.fp-one-titulo-pubdate .titulo {
+    margin: 0 0 5px;
+}
+
+.fp-one-titulo-pubdate .dom {
+    font-size: 56px;
+    font-weight: 600;
+    height: 56px;
+    line-height: 56px;
+    margin: 0;
+}
+
+.fp-one-titulo-pubdate .may {
+    margin: 3px 0 0;
+}
+
+.fp-one-cita {
+    font-size: 16px;
+    height: 120px;
+    padding: 12.5px;
+    background-color: #d6d6d6;
+    height: 120px;
+
+    line-height: 1.67;
+    margin-right: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

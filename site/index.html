@@ -11,102 +11,7 @@
   <script src="https://sdk.jinrishici.com/v2/browser/jinrishici.js" charset="utf-8"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/lunar-javascript/1.6.8/lunar.min.js"></script>
 
-  <style>
-    :root {
-      --primary-color: #3f51b5;
-      --accent-color: #536dfe;
-      --background-color: #ffffff;
-      --text-color: #000000;
-      --footer-bg-color: #121212;
-      --footer-color: #ffffff;
-    }
-
-    @media (prefers-color-scheme: dark) {
-      :root {
-        --background-color: #1D2129;
-        --text-color: #ffffff;
-      }
-
-      img {
-        filter: invert(100%);
-      }
-    }
-
-    body {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      color: var(--text-color);
-      background-color: var(--background-color);
-      text-align: center;
-      font-family: "LXGW WenKai", 'STKaiti', sans-serif;
-    }
-
-    .navigation {
-      background-color: var(--primary-color);
-      color: var(--footer-color);
-      padding: 10px;
-      text-align: center;
-    }
-
-    .calendar-container {
-      margin: 20px auto;
-      text-align: center;
-    }
-
-    .poem-container span {
-      margin: 10px auto;
-      font-size: xx-large;
-    }
-
-    img.calendar {
-      width: 80%;
-      max-width: 600px;
-      height: auto;
-    }
-
-    .btn {
-      background-color: var(--accent-color);
-      color: #fff;
-      padding: 10px 20px;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      margin: 0 10px;
-    }
-
-    .btn:hover {
-      background-color: var(--primary-color);
-    }
-
-    input[type="date"] {
-      appearance: none;
-      background-color: transparent;
-      color: var(--footer-color);
-      border: none;
-      border-bottom: 1px solid var(--accent-color);
-      outline: none;
-      font-size: 16px;
-      padding: 5px 0;
-      margin: 5px;
-    }
-
-    footer {
-      background-color: var(--footer-bg-color);
-      color: var(--footer-color);
-      padding: 20px 0;
-      width: 100%;
-      font-size: small;
-    }
-
-    a {
-      color: var(--primary-color);
-    }
-
-    a:hover {
-      color: var(--accent-color);
-    }
-  </style>
+  <link rel="stylesheet" href="assets/style.css">
 </head>
 
 <body>
@@ -123,7 +28,21 @@
     <span id="jinrishici-sentence">知我者，谓我心忧；不知我者，谓我何求。</span>
   </div>
   <div class="calendar-container">
-    <img class="calendar" src="" alt="日历图片">
+    <div id="calendar-owspace" style="display: none;">
+      <img class="calendar" src="" alt="今日">
+    </div>
+    <div id="calendar-one" class="fp-one" style="display: none;">
+      <img class="fp-one-imagen" src="https://image.wufazhuce.com/FsDlkQ-cYhxWs53gL54Ul5EWSpr7" alt="" />
+      <div class="fp-one-imagen-footer"> 摄影 </div>
+      <div class="fp-one-cita-wrapper">
+        <div class="fp-one-titulo-pubdate">
+          <p class="titulo">VOL.4177</p>
+          <p class="dom">14</p>
+          <p class="may">Mar 2024</p>
+        </div>
+        <div class="fp-one-cita">略</div>
+      </div>
+    </div>
   </div>
 
   <footer>
@@ -134,58 +53,7 @@
     字体-<a href="https://github.com/lxgw/LxgwWenKai">霞鹜文楷</a>
   </footer>
 
-  <script>
-    function updateLunarDate(date) {
-      const currentDate = new Date(datePicker.value);
-      const lunarDate = Lunar.fromDate(currentDate);
-      const day = lunarDate.toString();
-      const week = lunarDate.getWeekInChinese();
-      const gz = lunarDate.getYearInGanZhi();
-      const sx = lunarDate.getYearShengXiao()
-      const fest = lunarDate.getFestivals();
-      const jieqi = lunarDate.getJie();
-      document.getElementById("dateInfo").innerText = `${day} ${week} ${gz}${sx}年 ${jieqi} ${fest}`.trim();
-    }
-
-    function updateImageSrc(date) {
-      const [year, month, day] = date.split('-');
-      const base = 'https://img.owspace.com/Public/uploads/Download';
-      calendarImage.src = `${base}/${year}/${month}${day}.jpg`;
-      console.log(calendarImage.src)
-    }
-
-    const datePicker = document.getElementById('datePicker');
-    const prevDayButton = document.getElementById('prevDay');
-    const nextDayButton = document.getElementById('nextDay');
-    const calendarImage = document.querySelector('.calendar');
-
-    datePicker.value = new Date().toISOString().split("T")[0];
-    document.getElementById('today').innerText = datePicker.value;
-    updateImageSrc(datePicker.value);
-    updateLunarDate(datePicker.value);
-    nextDayButton.addEventListener('click', function () {
-      const currentDate = new Date(datePicker.value);
-      currentDate.setDate(currentDate.getDate() + 1);
-      datePicker.value = currentDate.toISOString().split("T")[0];
-      document.getElementById('today').innerText = datePicker.value;
-      updateImageSrc(datePicker.value);
-      updateLunarDate(datePicker.value);
-    });
-    prevDayButton.addEventListener('click', function () {
-      const currentDate = new Date(datePicker.value);
-      currentDate.setDate(currentDate.getDate() - 1);
-      datePicker.value = currentDate.toISOString().split("T")[0];
-      document.getElementById('today').innerText = datePicker.value;
-      updateImageSrc(datePicker.value);
-      updateLunarDate(datePicker.value);
-    });
-
-    datePicker.addEventListener('change', function () {
-      document.getElementById('today').innerText = this.value;
-      updateImageSrc(this.value);
-      updateLunarDate(datePicker.value);
-    });
-  </script>
+  <script src="assets/script.js"></script>
 </body>
 
 </html>
