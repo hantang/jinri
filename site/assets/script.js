@@ -7,17 +7,21 @@ function updateLunarDate(date) {
   const sx = lunarDate.getYearShengXiao()
   const fest = lunarDate.getFestivals();
   const jieqi = lunarDate.getJie();
-  document.getElementById("dateInfo").innerText = `${day} ${week} ${gz}${sx}年 ${jieqi} ${fest}`.trim();
+  const fj = `${jieqi} ${fest}`.trim();
+  document.getElementById("dateInfo").innerText = `${day} 星期${week} ${gz}${sx}年`.trim() + (fj != '' ? ` （${fg}）` : '');
 }
 
 function updatePage(date) {
   updateLunarDate(date);
-  const randomNumber = Math.random();
+  // const randomNumber = Math.random();
   let result = false;
+  const ONE_DAY = 1000 * 60 * 60 * 24;
+  const today = new Date();
+  const thatday = new Date(date);
   // console.log(randomNumber, new Date() < new Date(date));
-  if (randomNumber < 0.1 && new Date() > new Date(date)) {
+  if (Math.random() < 0.1 && (today-thatday)/ONE_DAY > 1) {
     // http vs https
-      result = updateOneImage(date);
+    result = updateOneImage(date);
   }
   if (result) {
     document.getElementById('calendar-owspace').style.display = 'none';
@@ -79,6 +83,7 @@ function dateUpdate(delta) {
   document.getElementById('today').innerText = datePicker.value;
   updatePage(datePicker.value);
 }
+
 document.addEventListener('DOMContentLoaded', function () {
   const datePicker = document.getElementById('datePicker');
   datePicker.value = new Date().toISOString().split("T")[0];
