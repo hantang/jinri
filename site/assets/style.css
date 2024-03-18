@@ -45,6 +45,11 @@ body {
     font-size: xx-large;
 }
 
+.poem-container #hitokoto-text {
+    margin: 10px auto;
+    font-size: larger;
+}
+
 img.calendar {
     width: 80%;
     max-width: 600px;

@@ -96,4 +96,16 @@ document.addEventListener('DOMContentLoaded', function () {
     updatePage(this.value);
   });
   updatePage(datePicker.value);
+  fetchHitokoto();
 });
+
+async function fetchHitokoto() {
+  // 一言 https://developer.hitokoto.cn/introduce.html
+  const response = await fetch('https://v1.hitokoto.cn')
+  const { uuid, hitokoto: hitokotoText } = await response.json();
+  const hitokoto = document.getElementById('hitokoto-text');
+  // hitokoto.href = `https://hitokoto.cn/?uuid=${uuid}`
+  hitokoto.innerText = hitokotoText
+}
+
+// 今日诗词 https://www.jinrishici.com/doc/
